@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.openclassrooms.datalayer.model.Category;
 import com.openclassrooms.datalayer.model.Comment;
@@ -30,6 +31,7 @@ public class DatalayerApplication  implements CommandLineRunner{
 		SpringApplication.run(DatalayerApplication.class, args);
 	}
 	
+	@Transactional
 	@Override
 	public void run(String... args) throws Exception {		
 		List<Product> products = (List<Product>) productService.getProducts();
@@ -52,8 +54,11 @@ public class DatalayerApplication  implements CommandLineRunner{
 		System.out.println("--------------------------------");
 		
 		Optional<Category> optCategory = categoryService.getProductById(1);
-		Category  optCategory1 = optCategory.get();
-		System.out.println("category 1"+optCategory1.getName());
+		Category  categoryId1 = optCategory.get();
+		System.out.println("category 1"+	categoryId1.getName());
+		
+		  categoryId1.getProducts().forEach(
+				product -> System.out.println("all products of categoryId1"+product.getName()));
 		System.out.println("--------------------------------");
 	
 		Optional<Comment> optComment = commentService.getProductById(1);
