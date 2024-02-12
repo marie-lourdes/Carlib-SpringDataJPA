@@ -115,7 +115,9 @@ CREATE TABLE `produit` (
 
 LOCK TABLES `produit` WRITE;
 /*!40000 ALTER TABLE `produit` DISABLE KEYS */;
-INSERT INTO `produit` VALUES (1,'AssuranceAuTiersSimple','Assurance couvrant uniquement les dégats matériels et corporels que vous êtes susceptible de causer à autrui avec votre véhicule.',500),(2,'AssuranceAuTiersEtendue','Assurance couvrant le minimum de la garantie responsabilité civile et le bris de glace, le vol, l\'attentat, les catastrophes naturelles et technologiques',800),(3,'AssuranceTousRisques','Assurance qui reprend les garanties de l\'assurance au tiers étendue et auxquelles on ajoute la garantie dommage tous accidents (responsable ou non).',1500),(4,'AssuranceTousRisquesJeunes','L\'assurance tous risques pour les jeunes conducteurs (- 2 ans de permis de conduire)',2200);
+INSERT INTO `produit` VALUES (1,"AssuranceAuTiersSimple","Assurance couvrant uniquement les dégats matériels et corporels que vous êtes susceptible de causer à autrui avec votre véhicule.",500),
+(2,"AssuranceAuTiersEtendue","Assurance couvrant le minimum de la garantie responsabilité civile et le bris de glace, le vol, l\'attentat, les catastrophes naturelles et technologiques",800),(3,"AssuranceTousRisques","Assurance qui reprend les garanties de l\'assurance au tiers étendue et auxquelles on ajoute la garantie dommage tous accidents (responsable ou non).",1500),
+(4,"AssuranceTousRisquesJeunes","L\'assurance tous risques pour les jeunes conducteurs (- 2 ans de permis de conduire)",2200);
 /*!40000 ALTER TABLE `produit` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
