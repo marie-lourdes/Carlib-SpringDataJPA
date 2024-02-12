@@ -47,6 +47,8 @@ public class DatalayerApplication  implements CommandLineRunner{
 		Optional<Product> optProduct = productService.getProductById(1);
 		Product productId1 = optProduct.get();
 		System.out.println("product 1"+productId1.getName());
+		
+		productId1.getComments().forEach(comment-> System.out.println(" all comments of product 1"+comment.getContent()));	
 		System.out.println("--------------------------------");
 		
 		Optional<Category> optCategory = categoryService.getProductById(1);
