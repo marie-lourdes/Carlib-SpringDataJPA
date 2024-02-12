@@ -1,6 +1,6 @@
 package com.openclassrooms.datalayer.service;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,5 +15,9 @@ public class ProductService {
 	
 	public Iterable<Product> getProducts() {
 		return productRepository.findAll();
+	}
+
+	public Optional<Product> getProductById(Integer id) {
+		return productRepository.findById(id);
 	}
 }

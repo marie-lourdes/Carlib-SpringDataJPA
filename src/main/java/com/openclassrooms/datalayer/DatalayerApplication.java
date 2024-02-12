@@ -1,6 +1,7 @@
 package com.openclassrooms.datalayer;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -41,6 +42,21 @@ public class DatalayerApplication  implements CommandLineRunner{
 		
 		List<Comment> comments = (List<Comment>)	commentService.getComments();
 		comments.forEach(comment-> System.out.println(comment.getContent()));
+		System.out.println("--------------------------------");
 		
+		Optional<Product> optProduct = productService.getProductById(1);
+		Product productId1 = optProduct.get();
+		System.out.println("product 1"+productId1.getName());
+		System.out.println("--------------------------------");
+		
+		Optional<Category> optCategory = categoryService.getProductById(1);
+		Category  optCategory1 = optCategory.get();
+		System.out.println("category 1"+optCategory1.getName());
+		System.out.println("--------------------------------");
+	
+		Optional<Comment> optComment = commentService.getProductById(1);
+		Comment CommentId1 =optComment.get();
+		System.out.println("comment 1"+CommentId1.getContent());
+		System.out.println("--------------------------------");
 	}
 }
