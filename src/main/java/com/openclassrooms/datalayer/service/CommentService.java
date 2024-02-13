@@ -17,7 +17,7 @@ public class CommentService {
 		return commentRepository.findAll();
 	}
 
-	public Optional<Comment> getProductById(Integer id) {
+	public Optional<Comment> getCommentById(Integer id) {
 		return commentRepository.findById(id);
 	}
 }

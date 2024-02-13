@@ -17,7 +17,7 @@ public class CategoryService {
 		return categoryRepository.findAll();
 	}
 
-	public Optional<Category> getProductById(Integer id) {
+	public Optional<Category> getCategoryById(Integer id) {
 		return categoryRepository.findById(id);
 	}
 }
