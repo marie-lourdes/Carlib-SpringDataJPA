@@ -33,7 +33,8 @@ public class DatalayerApplication  implements CommandLineRunner{
 	
 	@Transactional
 	@Override
-	public void run(String... args) throws Exception {		
+	public void run(String... args) throws Exception {	
+		
 		List<Product> products = (List<Product>) productService.getProducts();
 		products.forEach(product -> System.out.println(product.getName()));
 		System.out.println("--------------------------------");
