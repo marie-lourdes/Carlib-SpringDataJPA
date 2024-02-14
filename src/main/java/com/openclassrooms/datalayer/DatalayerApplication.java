@@ -79,13 +79,13 @@ public class DatalayerApplication implements CommandLineRunner {
 				+ CommentId1.getProduct().getName());
 		System.out.println("--------------------------------");
 
-		System.out.println("---------Creation----------");
+		System.out.println("***********************Creation****************");
 
 		Category newCategory = new Category();
 		newCategory.setName("Promotion");
 
 		newCategory = categoryService.addCategory(newCategory);
-		
+
 		categoryService.getCategories().forEach(
 				categorie -> System.out.println("list categories with new category created " + categorie.getName()));
 		System.out.println("--------------------------------");
@@ -95,25 +95,40 @@ public class DatalayerApplication implements CommandLineRunner {
 		newProduct.setCost(2400);
 		newProduct.setDescription("Assurance créee");
 
-		newCategory.addProduct(newProduct); 
-		// methodes helpers lors de l ajout du produit, on ajoute le product dans categorie qui est du coté Category avec Jointable
-		//on ajoute le product dans Catgory lors de la creation du product pour synchroniser les 2 objets mais sans l id generé(avant la persitence sql save())
+		// methodes helpers lors de l ajout du produit, on ajoute le product dans
+		// categorie qui est du coté Category avec Jointable
+		// on ajoute le product dans Category lors de la creation du product pour
+		// synchroniser les 2 objets mais sans l id generé SQL de new product(avant la
+		// persitence sql save())
+		newCategory.addProduct(newProduct);
+
 		newProduct = productService.addProduct(newProduct);
 		productService.getProducts()
 				.forEach(product -> System.out.println("list products with new product created " + product.getName()));
-		
-		newProduct.getCategories()
-		.forEach(category -> System.out.println(
-				" all categories of product created relation manyToMany  "
-						+ category.getName()));
+
+		// Verification de la bidirectionnalité lors de la creation du new product crée
+		// avec l objet associé Category retourné avec l id generé de product
+		newProduct.getCategories().forEach(category -> System.out
+				.println(" all categories of new product created relation manyToMany  " + category.getName()));
 		System.out.println("--------------------------------");
 
-		Comment newComment= new Comment();
-		newComment.setContent(" Comment created,Ce qu''on peut attendre d''une assurance au tiers, ni plus, ni moins");
-		
-		newProduct.addComment(newComment);//on ajoute le comment dans Product lors de la creation du comment pour synchroniser les 2 objets mais sans l id generé(avant la persitence sql save())
-		newComment= commentService.addComment(newComment);
-		commentService.getComments().forEach(comment -> System.out.println("list comments with new comment created "  + comment.getContent()));
-		
+		Comment newComment = new Comment();
+		newComment.setContent(" Comment created,Ce qu'on peut attendre d''une assurance au tiers, ni plus, ni moins");
+
+		// method helper on ajoute le comment dans Product, du coté de @OneToMany, lors
+		// de la creation du comment pour synchroniser les 2 objets mais sans l id
+		// generé SQL de newComment(avant la persitence sql save())
+		newProduct.addComment(newComment);
+
+		newComment = commentService.addComment(newComment);
+		commentService.getComments().forEach(
+				comment -> System.out.println("list comments with new comment created " + comment.getContent()));
+
+		// Verification de la bidirectionnalité lors de la creation du new product crée
+		// avec l objet associé Coment retourné avec l id generé de product
+		newProduct.getComments().forEach(comment -> System.out
+				.println(" all comment of new product created relation OneToMany " + comment.getContent()));
+		System.out.println("--------------------------------");
+
 	}
 }
