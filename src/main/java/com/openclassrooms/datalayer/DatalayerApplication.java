@@ -127,7 +127,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		// Verification de la bidirectionnalité lors de la creation du new product crée
 		// avec l objet associé Coment retourné avec l id generé de product
 		newProduct.getComments().forEach(comment -> System.out
-				.println(" all comment of new product created relation OneToMany " + comment.getContent()));
+				.println(" all comments of new product created relation OneToMany " + comment.getContent()));
 		System.out.println("--------------------------------");
 
 	}
