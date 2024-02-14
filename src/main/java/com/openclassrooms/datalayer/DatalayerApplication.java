@@ -36,15 +36,15 @@ public class DatalayerApplication  implements CommandLineRunner{
 	public void run(String... args) throws Exception {	
 		
 		List<Product> products = (List<Product>) productService.getProducts();
-		products.forEach(product -> System.out.println(product.getName()));
+		products.forEach(product -> System.out.println("all products "+product.getName()));
 		System.out.println("--------------------------------");
 		
 		List<Category> categories = (List<Category>)	categoryService.getCategories();
-		categories.forEach(categorie -> System.out.println(categorie.getName()));
+		categories.forEach(categorie -> System.out.println("all categories "+categorie.getName()));
 		System.out.println("--------------------------------");
 		
 		List<Comment> comments = (List<Comment>)	commentService.getComments();
-		comments.forEach(comment-> System.out.println(comment.getContent()));
+		comments.forEach(comment-> System.out.println("all comments "+comment.getContent()));
 		System.out.println("--------------------------------");
 		
 		Optional<Product> optProduct = productService.getProductById(1);
@@ -61,7 +61,7 @@ public class DatalayerApplication  implements CommandLineRunner{
 		System.out.println("category 1"+	categoryId1.getName());
 		
 		  categoryId1.getProducts().forEach(
-				product -> System.out.println("all products of categoryId1 relation manyToMany bidirectionnelle avec l entité product"+product.getName()));
+				product -> System.out.println("all products of categoryId1 relation manyToMany bidirectionnelle avec l entité product "+product.getName()));
 		System.out.println("--------------------------------");
 	
 		Optional<Comment> optComment = commentService.getCommentById(1);
@@ -69,5 +69,15 @@ public class DatalayerApplication  implements CommandLineRunner{
 		System.out.println("comment 1"+CommentId1.getContent());
 		System.out.println(" a product  of a comment1 relation ManyToOne bidirectionnelle avec  l entité Product "+CommentId1.getProduct().getName());
 		System.out.println("--------------------------------");
+		
+		System.out.println("---------Creation----------");
+		
+		Category newCategory = new Category();
+		newCategory.setName("Promotion");
+		
+		newCategory=categoryService.addCategory(newCategory);
+		categoryService.getCategories().forEach(categorie -> System.out.println("list categories with new category created "+categorie.getName()));
+		System.out.println("--------------------------------");
+		
 	}
 }

@@ -20,4 +20,9 @@ public class CategoryService {
 	public Optional<Category> getCategoryById(Integer id) {
 		return categoryRepository.findById(id);
 	}
+	
+	public Category addCategory(Category category) {
+		return categoryRepository.save(category);		
+	}
+	
 }
