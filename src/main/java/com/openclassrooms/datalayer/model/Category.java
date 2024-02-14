@@ -42,6 +42,15 @@ public class Category {
 	)
 	private List<Product> products = new ArrayList<>();
 
-	
-	
+//methode utilitaire helpers pour la synchronisation des 2 objets associés	
+	public void addProduct(Product product) {
+		products.add(product);
+		product.getCategories().add(this);
+	}
+ 
+	public void removeProduit(Product product) {
+		products.remove(product);
+		product.getCategories().remove(this);
+	}
+
 }

@@ -49,4 +49,16 @@ public class Product {
 	private List<Category> categories = new ArrayList<>();
  
 	// Add getters & setters
+	
+	//methode utilitaire helpers pour la synchronisation des 2 objets associés	
+	public void addComment(Comment comment) {
+		comments.add(comment);
+		comment.setProduct(this);
+	}
+ 
+	public void removeComment(Comment comment) {
+		comments.remove(comment);
+		comment.setProduct(null);
+	}
+
 }
