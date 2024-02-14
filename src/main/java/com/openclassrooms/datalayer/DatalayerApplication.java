@@ -146,6 +146,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		List<Product> productsPresentWithCategoryRemove = categoryService.getCategoryById(1).get().getProducts();
 		productsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of category id 1 before removing " + product.getName()));
+		
 		categoryService.deleteCategoryById(1);
 
 		// verification de la non suppression des produits associé a la categorie
@@ -154,13 +155,14 @@ public class DatalayerApplication implements CommandLineRunner {
 		verifProductsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of ex category id 1 after removing " + product.getName()));
 
-		// DeleteProduct id=1
+		// DeleteProduct id=1 sans suppression de la cetgory associé et avec suppression du commentairs associé
 		Product productToRemove = productService.getProductById(1).get();
 		List<Comment> existingCommentsOfProductToRemove = productToRemove.getComments();
 
 		// method helper on supprime les commentaires associé en meme temps que la
 		// suppression du product
 		existingCommentsOfProductToRemove.forEach(comment -> productToRemove.removeComment(comment));
+		
 		productService.deleteProductById(1);
 
 		// verification de la non suppression des categories associé au produit supprimé
@@ -168,13 +170,14 @@ public class DatalayerApplication implements CommandLineRunner {
 		verifCategoriesPresentWithProductRemove.forEach(category -> System.out
 				.println("all categories  of ex product id 1 after removing " + category.getName()));
 
-		// DeleteComment id=1
+		// DeleteComment id=1 sans suppression du produit associé
 		Comment commentToRemove = commentService.getCommentById(1).get();
 		Product existingProductOfCommentToRemove = commentToRemove.getProduct();
 		// method helper on supprime le commentaire id 1 qui ne supprimera pas le
 		// product associé via le cascade type merge et persist mais pas ALL
 		// Suppresion du comment dans la list de Product
 		existingProductOfCommentToRemove.removeComment(commentToRemove);
+		
 		commentService.deleteCommentById(1);
 
 		// verification de la non suppression du produit associé au commentaire supprimé
