@@ -140,5 +140,36 @@ public class DatalayerApplication implements CommandLineRunner {
 		
 		existingProduct = productService.getProductById(1).get();
 		System.out.println(existingProduct.getCost());
+		
+		System.out.println("***********************Suppression****************");	
+		//DeleteProduct id=1
+		Product existingProductToRemove = productService.getProductById(1).get();
+		// method helper  on supprime les commentaires associé en meme temps que la suppression du product 
+		 existingProductToRemove.getComments().forEach(comment ->existingProductToRemove .removeComment(comment) );
+		productService.deleteProductById(1);
+		
+		//DeleteComment id=1
+		Product  existingProductOfCommentToRemove = commentService.getCommentById(1).get().getProduct();
+		// method helper  on supprime le commentaire id 1 qui ne supprimera pas le product associé via le cascade type merge et persist mais pas ALL
+		//Suppresion du comment dans la list de Product 
+		existingProductOfCommentToRemove.getComments().forEach(comment ->existingProductOfCommentToRemove.removeComment(comment) );
+	   commentService.deleteCommentById(1);
+		
+		//DeleteCategory id=1 sans suppresion de product associé
+		int verifIdProductPresentWithCategoryRemove = commentService.getCommentById(1).get().getProduct().getProductId();
+	
+		categoryService.deleteCategoryById(1);
+	Product	verifProductPresentWithCategoryRemove = productService.getProductById(verifIdProductPresentWithCategoryRemove).get();
+		System.out.println(" product of ex category id 1 after removing " +verifProductPresentWithCategoryRemove );
+		
+		
+		//Deleteproductid=2 sans suppresion de la category associé
+
+		 productService.getProductById(2).get().getCategories().forEach(category ->System.out.println("all categories  of  product id to remove 2 before removing "+ category.getName()) );
+
+		categoryService.deleteCategoryById(1);
+		
+	categoryService.getCategories().forEach(category ->System.out.println(category.getName()));
+		System.out.println("all categories  of ex product id 2 after removing " );
 	}
 }
