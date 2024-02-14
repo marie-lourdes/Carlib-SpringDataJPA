@@ -185,5 +185,10 @@ public class DatalayerApplication implements CommandLineRunner {
 				.getProductById(existingProductOfCommentToRemove.getProductId()).get();
 		System.out
 				.println("product of comment id 1 after removing" + verifProductByIdPresentWithCommentRemove.getName());
+	
+
+		System.out.println("***********************Derived Queries requete findByName()****************");
+		Iterable<Product> searchResultsByName = productService.getProductsByName("AssuranceTousRisques");
+		 searchResultsByName.forEach(resultProduct -> System.out.println("resultProduct by name"+resultProduct.getProductId()));
 	}
 }
