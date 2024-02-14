@@ -77,7 +77,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		System.out.println("comment 1" + CommentId1.getContent());
 		System.out.println(" a product  of a comment1 relation ManyToOne bidirectionnelle avec  l entité Product "
 				+ CommentId1.getProduct().getName());
-		System.out.println("--------------------------------");
+	
 
 		System.out.println("***********************Creation****************");
 
@@ -102,7 +102,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		// persitence sql save())
 		newCategory.addProduct(newProduct);
 
-		newProduct = productService.addProduct(newProduct);
+		newProduct = productService.saveProduct(newProduct);
 		productService.getProducts()
 				.forEach(product -> System.out.println("list products with new product created " + product.getName()));
 
@@ -128,7 +128,17 @@ public class DatalayerApplication implements CommandLineRunner {
 		// avec l objet associé Coment retourné avec l id generé de product
 		newProduct.getComments().forEach(comment -> System.out
 				.println(" all comments of new product created relation OneToMany " + comment.getContent()));
-		System.out.println("--------------------------------");
+		
 
+		System.out.println("***********************Mise à jour****************");	
+		//Update Product id=1
+		Product existingProduct = productService.getProductById(1).get();
+		System.out.println(existingProduct.getCost());
+		
+		existingProduct.setCost(3000);
+		productService.saveProduct(existingProduct);
+		
+		existingProduct = productService.getProductById(1).get();
+		System.out.println(existingProduct.getCost());
 	}
 }
