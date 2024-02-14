@@ -77,7 +77,6 @@ public class DatalayerApplication implements CommandLineRunner {
 		System.out.println("comment 1" + CommentId1.getContent());
 		System.out.println(" a product  of a comment1 relation ManyToOne bidirectionnelle avec  l entité Product "
 				+ CommentId1.getProduct().getName());
-	
 
 		System.out.println("***********************Creation****************");
 
@@ -128,52 +127,56 @@ public class DatalayerApplication implements CommandLineRunner {
 		// avec l objet associé Coment retourné avec l id generé de product
 		newProduct.getComments().forEach(comment -> System.out
 				.println(" all comments of new product created relation OneToMany " + comment.getContent()));
-		
 
-		System.out.println("***********************Mise à jour****************");	
-		//Update Product id=1
+		System.out.println("***********************Mise à jour****************");
+		// Update Product id=1
 		Product existingProduct = productService.getProductById(1).get();
 		System.out.println(existingProduct.getCost());
-		
+
 		existingProduct.setCost(3000);
 		productService.saveProduct(existingProduct);
-		
+
 		existingProduct = productService.getProductById(1).get();
 		System.out.println(existingProduct.getCost());
-		
-		System.out.println("***********************Suppression****************");	
-		//DeleteProduct id=1
-		Product productToRemove= productService.getProductById(1).get();
-		List<Comment> existingCommentsOfProductToRemove =productToRemove.getComments();
-		// method helper  on supprime les commentaires associé en meme temps que la suppression du product 
-		existingCommentsOfProductToRemove.forEach(comment ->productToRemove .removeComment(comment) );
-		productService.deleteProductById(1);
-		
-		//DeleteComment id=1
-		Comment commentToRemove=commentService.getCommentById(1).get();
-		Product  existingProductOfCommentToRemove =  commentToRemove.getProduct();
-		// method helper  on supprime le commentaire id 1 qui ne supprimera pas le product associé via le cascade type merge et persist mais pas ALL
-		//Suppresion du comment dans la list de Product 
-		 existingProductOfCommentToRemove.removeComment(commentToRemove);
-	   commentService.deleteCommentById(1);
-		
-		//DeleteCategory id=1 sans suppresion de product associé
-		List<Product> productsPresentWithCategoryRemove = 	categoryService.getCategoryById(1).get().getProducts();
-		productsPresentWithCategoryRemove.forEach(product -> System.out.println(" products of category id 1 before removing " +product.getName() ));
-		categoryService.deleteCategoryById(1);
-		List<Product>verifProductsPresentWithCategoryRemove = (List<Product>) productService.getProducts();
-		System.out.println(" products of ex category id 1 after removing " +verifProductsPresentWithCategoryRemove);
-		
-		
-		//Deleteproductid=2 sans suppresion de la category associé
-		List<Category>categoriesPresentWithProductRemove =  productService.getProductById(2).get().getCategories();
-		categoriesPresentWithProductRemove .forEach(category -> System.out.println(" categories of product id 2 before removing " +category.getName() ));
-		
 
+		System.out.println("***********************Suppression****************");
+
+		// DeleteCategory id=1 sans suppresion de product associé
+		List<Product> productsPresentWithCategoryRemove = categoryService.getCategoryById(1).get().getProducts();
+		productsPresentWithCategoryRemove.forEach(
+				product -> System.out.println(" products of category id 1 before removing " + product.getName()));
 		categoryService.deleteCategoryById(1);
 		
-		List<Category>verifCategoriesPresentWithProductRemove = (List<Category>) categoryService.getCategories();
-		System.out.println("all categories  of ex product id 2 after removing " +verifCategoriesPresentWithProductRemove);
+		// verification de la non suppression des produits associé a la categorie supprimé
+		List<Product> verifProductsPresentWithCategoryRemove = (List<Product>) productService.getProducts();
+		verifProductsPresentWithCategoryRemove.forEach(
+				product -> System.out.println(" products of ex category id 1 after removing " + product.getName()));
+
+		// DeleteProduct id=1
+		Product productToRemove = productService.getProductById(1).get();
+		List<Comment> existingCommentsOfProductToRemove = productToRemove.getComments();
 		
+		// method helper on supprime les commentaires associé en meme temps que la
+		// suppression du product
+		existingCommentsOfProductToRemove.forEach(comment -> productToRemove.removeComment(comment));
+		productService.deleteProductById(1);
+
+		// verification de la non suppression des categories associé au produit supprimé
+		List<Category> verifCategoriesPresentWithProductRemove = (List<Category>) categoryService.getCategories();
+		verifCategoriesPresentWithProductRemove.forEach(category -> System.out
+				.println("all categories  of ex product id 1 after removing " + category.getName()));
+
+		// DeleteComment id=1
+		Comment commentToRemove = commentService.getCommentById(1).get();
+		Product existingProductOfCommentToRemove = commentToRemove.getProduct();
+		// method helper on supprime le commentaire id 1 qui ne supprimera pas le
+		// product associé via le cascade type merge et persist mais pas ALL
+		// Suppresion du comment dans la list de Product
+		existingProductOfCommentToRemove.removeComment(commentToRemove);
+		commentService.deleteCommentById(1);
+		
+		// verification de la non suppression du produit  associé au commentaire supprimé
+		Product verifProductByIdPresentWithCommentRemove = productService.getProductById(existingProductOfCommentToRemove.getProductId()).get();
+		System.out.println("product of comment id 1 after removing"+verifProductByIdPresentWithCommentRemove.getName());
 	}
 }
