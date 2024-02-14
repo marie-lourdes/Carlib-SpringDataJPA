@@ -85,6 +85,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		newCategory.setName("Promotion");
 
 		newCategory = categoryService.addCategory(newCategory);
+		
 		categoryService.getCategories().forEach(
 				categorie -> System.out.println("list categories with new category created " + categorie.getName()));
 		System.out.println("--------------------------------");
@@ -94,10 +95,25 @@ public class DatalayerApplication implements CommandLineRunner {
 		newProduct.setCost(2400);
 		newProduct.setDescription("Assurance créee");
 
+		newCategory.addProduct(newProduct); 
+		// methodes helpers lors de l ajout du produit, on ajoute le product dans categorie qui est du coté Category avec Jointable
+		//on ajoute le product dans Catgory lors de la creation du product pour synchroniser les 2 objets mais sans l id generé(avant la persitence sql save())
 		newProduct = productService.addProduct(newProduct);
 		productService.getProducts()
 				.forEach(product -> System.out.println("list products with new product created " + product.getName()));
+		
+		newProduct.getCategories()
+		.forEach(category -> System.out.println(
+				" all categories of product created relation manyToMany  "
+						+ category.getName()));
 		System.out.println("--------------------------------");
 
+		Comment newComment= new Comment();
+		newComment.setContent(" Comment created,Ce qu''on peut attendre d''une assurance au tiers, ni plus, ni moins");
+		
+		newProduct.addComment(newComment);//on ajoute le comment dans Product lors de la creation du comment pour synchroniser les 2 objets mais sans l id generé(avant la persitence sql save())
+		newComment= commentService.addComment(newComment);
+		commentService.getComments().forEach(comment -> System.out.println("list comments with new comment created "  + comment.getContent()));
+		
 	}
 }

@@ -20,4 +20,8 @@ public class CommentService {
 	public Optional<Comment> getCommentById(Integer id) {
 		return commentRepository.findById(id);
 	}
+	
+	public Comment addComment(Comment comment) {
+		return commentRepository.save(comment);
+	}
 }
