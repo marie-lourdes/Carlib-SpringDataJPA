@@ -129,6 +129,7 @@ public class DatalayerApplication implements CommandLineRunner {
 				.println(" all comments of new product created relation OneToMany " + comment.getContent()));
 
 		System.out.println("***********************Mise à jour****************");
+
 		// Update Product id=1
 		Product existingProduct = productService.getProductById(1).get();
 		System.out.println(existingProduct.getCost());
@@ -146,8 +147,9 @@ public class DatalayerApplication implements CommandLineRunner {
 		productsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of category id 1 before removing " + product.getName()));
 		categoryService.deleteCategoryById(1);
-		
-		// verification de la non suppression des produits associé a la categorie supprimé
+
+		// verification de la non suppression des produits associé a la categorie
+		// supprimé
 		List<Product> verifProductsPresentWithCategoryRemove = (List<Product>) productService.getProducts();
 		verifProductsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of ex category id 1 after removing " + product.getName()));
@@ -155,7 +157,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		// DeleteProduct id=1
 		Product productToRemove = productService.getProductById(1).get();
 		List<Comment> existingCommentsOfProductToRemove = productToRemove.getComments();
-		
+
 		// method helper on supprime les commentaires associé en meme temps que la
 		// suppression du product
 		existingCommentsOfProductToRemove.forEach(comment -> productToRemove.removeComment(comment));
@@ -174,9 +176,11 @@ public class DatalayerApplication implements CommandLineRunner {
 		// Suppresion du comment dans la list de Product
 		existingProductOfCommentToRemove.removeComment(commentToRemove);
 		commentService.deleteCommentById(1);
-		
-		// verification de la non suppression du produit  associé au commentaire supprimé
-		Product verifProductByIdPresentWithCommentRemove = productService.getProductById(existingProductOfCommentToRemove.getProductId()).get();
-		System.out.println("product of comment id 1 after removing"+verifProductByIdPresentWithCommentRemove.getName());
+
+		// verification de la non suppression du produit associé au commentaire supprimé
+		Product verifProductByIdPresentWithCommentRemove = productService
+				.getProductById(existingProductOfCommentToRemove.getProductId()).get();
+		System.out
+				.println("product of comment id 1 after removing" + verifProductByIdPresentWithCommentRemove.getName());
 	}
 }
