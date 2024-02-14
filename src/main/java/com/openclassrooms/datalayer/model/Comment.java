@@ -24,8 +24,10 @@ public class Comment {
 	private String content;
 
 	@ManyToOne(
-			cascade = CascadeType.ALL
-                                      )
+			cascade= {
+					CascadeType.PERSIST,// pour toutes les actions de creation d une categorie il y aura un impact sur les produits associé
+					CascadeType.MERGE// pour toutes les actions de modification d une categorie il y aura un impact sur les produits associé
+			}                                      )
 	@JoinColumn(name="produit_id")
 	private Product product;
 	
