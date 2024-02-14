@@ -43,7 +43,7 @@ public class Product {
 	private List<Comment> comments;
 	
 	@ManyToMany(
-			mappedBy = "produits",
+			mappedBy = "products",
 			cascade=CascadeType.ALL
 			)
 	private List<Category> categories = new ArrayList<>();

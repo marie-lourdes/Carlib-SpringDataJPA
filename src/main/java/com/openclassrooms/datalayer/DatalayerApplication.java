@@ -51,7 +51,7 @@ public class DatalayerApplication  implements CommandLineRunner{
 		Product productId1 = optProduct.get();
 		System.out.println("product 1"+productId1.getName());
 		
-		productId1.getComments().forEach(comment-> System.out.println(" all comments of product 1"+comment.getContent()));	
+		productId1.getComments().forEach(comment-> System.out.println(" all comments of product 1 relation OneToMany bidirectionnelle avec  l entité Comment "+comment.getContent()));	
 		
 		productId1.getCategories().forEach(category-> System.out.println(" all categories of product 1 relation manyToMany biderectionnelle avec  l entité Category "+category.getName()));	
 		System.out.println("--------------------------------");
@@ -67,6 +67,7 @@ public class DatalayerApplication  implements CommandLineRunner{
 		Optional<Comment> optComment = commentService.getCommentById(1);
 		Comment CommentId1 =optComment.get();
 		System.out.println("comment 1"+CommentId1.getContent());
+		System.out.println(" a product  of a comment1 relation ManyToOne bidirectionnelle avec  l entité Product "+CommentId1.getProduct().getName());
 		System.out.println("--------------------------------");
 	}
 }

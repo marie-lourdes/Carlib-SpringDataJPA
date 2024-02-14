@@ -42,20 +42,6 @@ public class Category {
 	)
 	private List<Product> products = new ArrayList<>();
 
-	public int getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	
 }
