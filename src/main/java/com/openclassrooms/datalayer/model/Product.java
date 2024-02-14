@@ -36,15 +36,15 @@ public class Product {
 	private int cost;
 	
 	@OneToMany(
+			mappedBy="product",
 			cascade=CascadeType.ALL,
-			orphanRemoval=true,
-			fetch= FetchType.EAGER
+			orphanRemoval=true
 			)
-	@JoinColumn(name="produit_id")
 	private List<Comment> comments;
 	
 	@ManyToMany(
-			mappedBy = "produits"
+			mappedBy = "produits",
+			cascade=CascadeType.ALL
 			)
 	private List<Category> categories = new ArrayList<>();
  
