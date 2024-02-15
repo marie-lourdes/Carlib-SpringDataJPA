@@ -1,5 +1,6 @@
 package com.openclassrooms.datalayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +35,9 @@ public class DatalayerApplication implements CommandLineRunner {
 	@Transactional
 	@Override
 	public void run(String... args) throws Exception {
+		/*---------------------REQUETE CRUD-------------------------------ne pas executer plusieurs fois au lancement de l application*/
 
-		List<Product> products = (List<Product>) productService.getProducts();
+		/*List<Product> products = (List<Product>) productService.getProducts();
 		products.forEach(product -> System.out.println("all products " + product.getName()));
 		System.out.println("--------------------------------");
 
@@ -146,7 +148,7 @@ public class DatalayerApplication implements CommandLineRunner {
 		List<Product> productsPresentWithCategoryRemove = categoryService.getCategoryById(1).get().getProducts();
 		productsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of category id 1 before removing " + product.getName()));
-		
+
 		categoryService.deleteCategoryById(1);
 
 		// verification de la non suppression des produits associé a la categorie
@@ -155,14 +157,15 @@ public class DatalayerApplication implements CommandLineRunner {
 		verifProductsPresentWithCategoryRemove.forEach(
 				product -> System.out.println(" products of ex category id 1 after removing " + product.getName()));
 
-		// DeleteProduct id=1 sans suppression de la cetgory associé et avec suppression du commentairs associé
+		// DeleteProduct id=1 sans suppression de la cetgory associé et avec suppression
+		// du commentairs associé
 		Product productToRemove = productService.getProductById(1).get();
 		List<Comment> existingCommentsOfProductToRemove = productToRemove.getComments();
 
 		// method helper on supprime les commentaires associé en meme temps que la
 		// suppression du product
 		existingCommentsOfProductToRemove.forEach(comment -> productToRemove.removeComment(comment));
-		
+
 		productService.deleteProductById(1);
 
 		// verification de la non suppression des categories associé au produit supprimé
@@ -177,18 +180,37 @@ public class DatalayerApplication implements CommandLineRunner {
 		// product associé via le cascade type merge et persist mais pas ALL
 		// Suppresion du comment dans la list de Product
 		existingProductOfCommentToRemove.removeComment(commentToRemove);
-		
+
 		commentService.deleteCommentById(1);
 
 		// verification de la non suppression du produit associé au commentaire supprimé
 		Product verifProductByIdPresentWithCommentRemove = productService
 				.getProductById(existingProductOfCommentToRemove.getProductId()).get();
 		System.out
-				.println("product of comment id 1 after removing" + verifProductByIdPresentWithCommentRemove.getName());
-	
+				.println("product of comment id 1 after removing" + verifProductByIdPresentWithCommentRemove.getName());*/
 
-		System.out.println("***********************Derived Queries requete findByName()****************");
+		
+		/*---------------------REQUETE AVANCEES-------------------------------*/
+		
+		System.out.println("***********************Derived Queries ****************");
 		Iterable<Product> searchResultsByName = productService.getProductsByName("AssuranceTousRisques");
-		 searchResultsByName.forEach(resultProduct -> System.out.println("resultProduct id found  by name "+resultProduct.getProductId()));
+		searchResultsByName.forEach(
+				resultProduct -> System.out.println("resultProduct id found  by name " + resultProduct.getProductId()));
+
+		List<Product> searchResults = new ArrayList<Product>();
+		searchResults = (List<Product>) productService.getProductsByCategoryName("Standard");
+		searchResults.forEach(product -> System.out.println(product.getName()));
+
+		searchResults = (List<Product>) productService.getProductsByCostLessThan(1000);
+		searchResults.forEach(product -> System.out.println(product.getName()));
+
+		Iterable<Category> searchCategory = categoryService.getCategoryByName("Standard");
+		searchCategory.forEach(category -> System.out.println(category.getCategoryId()));
+
+		searchCategory = categoryService.getCategoriesByProductName("AssuranceTousRisques");
+		searchCategory.forEach(category -> System.out.println(category.getName()));
+
+		Iterable<Comment> searchComments = commentService.getCommentContaining("deçu");
+		searchComments.forEach(comment -> System.out.println(comment.getContent()));
 	}
 }
