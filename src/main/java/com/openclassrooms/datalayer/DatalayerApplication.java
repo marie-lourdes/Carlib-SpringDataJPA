@@ -189,6 +189,6 @@ public class DatalayerApplication implements CommandLineRunner {
 
 		System.out.println("***********************Derived Queries requete findByName()****************");
 		Iterable<Product> searchResultsByName = productService.getProductsByName("AssuranceTousRisques");
-		 searchResultsByName.forEach(resultProduct -> System.out.println("resultProduct by name"+resultProduct.getProductId()));
+		 searchResultsByName.forEach(resultProduct -> System.out.println("resultProduct id found  by name "+resultProduct.getProductId()));
 	}
 }
